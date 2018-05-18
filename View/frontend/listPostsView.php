@@ -50,7 +50,7 @@ while ($data = $Posts->fetch())
 }
 $Posts->closeCursor();
 ?>    
-<a href="index.php?action=newPost">Ajouter un billet</a> 
+    <a href="index.php?action=newPost">Ajouter un billet</a> 
 </body>
 <?php $content = ob_get_clean(); ?>
 

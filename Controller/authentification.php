@@ -16,9 +16,9 @@ class Authentification {
         if(isset ($_POST['pseudo']))
         {
         
-        $user = $UsersManager->verifId($_POST['pseudo']);
+        $User = $UsersManager->verifId($_POST['pseudo']);
     
-        if($user->getPassword() != password_hash($_POST['password'], PASSWORD_BCRYPT)){
+        if($User->getPassword() != password_hash($_POST['password'], PASSWORD_BCRYPT)){
             throw new Exception('Les identifiants ne correspondent pas');
         }
         else {
@@ -31,9 +31,9 @@ class Authentification {
     {
         $UsersManager = new UsersManager();
     
-        $user = $UsersManager->addUser($id, $pseudo, password_hash($password, PASSWORD_BCRYPT), $mail, $role);
+        $User = $UsersManager->addUser($id, $pseudo, password_hash($password, PASSWORD_BCRYPT), $mail, $role);
     
-        if($user == false){
+        if($User == false){
             throw new Exception('L\'inscription n\'a pas pu aboutir !');
         }
         else {
@@ -62,6 +62,7 @@ class Authentification {
     public function getUsers($_id, $pseudo, $_password, $_mail, $_role)
     {
         $UsersManager = new UsersManager();
+        
         $users = $UsersManager->getUsers();
         
         //require('view/frontend/listPostsView.php');  
@@ -72,7 +73,17 @@ class Authentification {
         require("View/frontend/loginView.php");
     }
     
-    public function isAdmin(){
+    public function isAdmin()
+    {
+        $UsersManager = new UsersManager();
         
+        $User = $UsersManager->getUser($_GET['id']);
+        
+        if($User['role'] == 'admin')
+        {
+            return true;
+        } else{
+            return false;
+        }
     }
 }
