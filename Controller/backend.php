@@ -116,8 +116,8 @@ class Backend {
         $CommentsManager = new CommentsManager();
         $Comments = $CommentsManager->getComments();
         
-        /*$UsersManager = new UsersManager();
-        $users = $UsersManager->getUsers($id, $pseudo, $password, $mail, $role);*/
+        $UsersManager = new UsersManager();
+        $Users = $UsersManager->getUsers();
         
         require("View/backend/adminDashboardView.php");
     }

@@ -35,11 +35,12 @@ class UsersManager extends Manager
         return $User;
     }
         
-    public function getUsers($_id, $_pseudo, $_password, $_mail, $_role)
+    public function getUsers()
     {
         $db = $this->dbConnect();
-        $Users = $db->prepare('SELECT id, pseudo, password, mail, role FROM users WHERE id = ? ORDER BY id DESC');
-        $Users->execute(array($_id, $_pseudo, $_password, $_mail, $_role));        
+        
+        $Users = $db->prepare('SELECT id, pseudo, password, mail, role FROM users ORDER BY id DESC');
+        $Users->execute();        
         return $Users;
     }        
 } 
