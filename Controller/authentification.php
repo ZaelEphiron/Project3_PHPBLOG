@@ -69,7 +69,10 @@ class Authentification {
     
     public function login()
     {
-        require("View/backend/sessionAdminView.php");
+        require("View/frontend/loginView.php");
     }
     
+    public function isAdmin(){
+        
+    }
 }
