@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<?php $title = htmlspecialchars($post['title']); ?>
+<?php $title = "Nouvel article"; ?>
 
 <head>
     <h1>Formulaire d'ajout de billet :</h1>
@@ -23,4 +23,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>

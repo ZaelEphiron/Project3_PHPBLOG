@@ -2,6 +2,8 @@
 
 namespace BlogPHP\Entity;
 
+use BlogPHP\Entity\Entity;
+
 class Comment extends Entity
 {
     // Attributs

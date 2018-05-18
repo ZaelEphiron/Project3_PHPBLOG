@@ -1,4 +1,5 @@
 <?php ob_start(); ?>
+<?php $title = "Modifier un commentaire"; ?>
 <p><a href="index.php?action=listPosts">Accueil</a></p>
 
 <head>
@@ -9,7 +10,7 @@
     <form action="index.php?action=editComment&amp;id=<?= $commentID ?>" method="post">
         <div>
             <label for="comment">Commentaire :</label><br />  
-            <textarea id="comment" name="comment" value="" /><?= $comment['comment'] ?></textarea>
+            <textarea id="comment" name="comment" value="" /><?= $Comment['comment'] ?></textarea>
             <br />
         </div>
         <div>
@@ -20,4 +21,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>

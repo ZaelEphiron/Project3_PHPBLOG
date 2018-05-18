@@ -1,116 +1,141 @@
 <?php
 namespace BlogPHP\App;
 
-require('Controller/frontend.php');
-require('Controller/backend.php');
+use BlogPHP\Controller\Frontend;
+use BlogPHP\Controller\Backend;
+use BlogPHP\Controller\Authentification;
 
 class Router
 {   
     public function getRoute($url)
     {
-        var_dump($url);
         $frontend = new Frontend();
         $backend = new Backend();
+        $authentification = new Authentification();
         
         if (isset($_GET['action'])) {
-            if ($_GET['action'] == 'listPosts') {
+            if ($_GET['action'] === 'listPosts') {
                 $frontend->listPosts();
             }
-            elseif ($_GET['action'] == 'post') {
+            elseif ($_GET['action'] === 'post') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     $frontend->post();
                 }
                 else {
-                    throw new Exception('Aucun identifiant de billet envoyé');
+                    throw new \Exception('Aucun identifiant de billet envoyé');
                 }
             }
-            elseif ($_GET['action'] == 'addComment') {
+            elseif ($_GET['action'] === 'addComment') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     if (!empty($_POST['author']) && !empty($_POST['comment'])) {
                         $frontend->addComment($_GET['id'], $_POST['author'], $_POST['comment']);
                     }
                     else {
-                        throw new Exception('Tous les champs ne sont pas remplis !');
+                        throw new \Exception('Tous les champs ne sont pas remplis !');
                     }
                 }
                 else {
-                    throw new Exception('Aucun identifiant de billet envoyé');
+                    throw new \Exception('Aucun identifiant de billet envoyé');
                 }
             }
-            elseif ($_GET['action'] == 'getComment') {
+            elseif ($_GET['action'] === 'getComment') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) { 
                 $frontend->getComment($_GET['id']);
                 }
                 else {
-                    throw new Exception('Aucun identifiant de commentaire envoyé !');
+                    throw new \Exception('Aucun identifiant de commentaire envoyé !');
                 }
             }
-            elseif ($_GET['action'] == 'editComment'){
+            elseif ($_GET['action'] === 'editComment'){
                 if (isset($_GET['id']) && $_GET['id'] > 0)
                 {
                     if (!empty($_POST['comment'])){
                     $frontend->editComment($_GET['id'], $_POST['comment']);
                     } else{
-                        throw new Exception('La modification est un échec !');
+                        throw new \Exception('La modification est un échec !');
                         }
                 } else {
-                throw new Exception('Aucun identifiant de commentaire envoyé !');
+                throw new \Exception('Aucun identifiant de commentaire envoyé !');
                 }
             }
-            elseif ($_GET['action'] == 'deleteComment') {
+             elseif ($_GET['action'] === 'confirmDeleteComment') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    $frontend->deleteComment($_GET['id']);
-                } else {
-                    throw new Exception('Aucun identifiant de commentaire envoyé !');
-                }
-            }
-            elseif ($_GET['action'] == 'addPost') {
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    if (!empty($_POST['title']) && !empty($_POST['content'])) {
-                        $backend->addPost($_GET['id'], $_POST['title'], $_POST['content']);
-                    } else{
-                        throw new Exception('Tous les champs ne sont pas remplis !');
+                    $backend->confirmDeleteComment($_GET['id']);
+                    } else {
+                    throw new \Exception('Aucun identifiant de billet envoyé !');
                     }
+            }
+            elseif ($_GET['action'] === 'deleteComment') {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $backend->deleteComment($_GET['id']);
                 } else {
-                    throw new Exception('Aucun identifiant de billet envoyé !');
+                    throw new \Exception('Aucun identifiant de commentaire envoyé !');
                 }
             }
-        }
-        elseif ($_GET['action'] == 'getPost') {
+            elseif ($_GET['action'] === 'newPost') {
+                $backend->newPost();
+            }
+            elseif ($_GET['action'] === 'addPost') {
+                if (!empty($_POST['title']) && !empty($_POST['content'])) {
+                        $backend->addPost($_POST['title'], $_POST['content']);
+                    } else{
+                        throw new \Exception('Tous les champs ne sont pas remplis !');
+                    } 
+            }
+        elseif ($_GET['action'] === 'getPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
             $backend->getPost($_GET['id']);
             } else {
-                throw new Exception('Aucun identifiant de billet envoyé !');
+                throw new \Exception('Aucun identifiant de billet envoyé !');
             }
         }
-        elseif ($_GET['action'] == 'editPost') {
+        elseif ($_GET['action'] === 'editPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
                 if (!empty($_POST['title']) && !empty($_POST['content'])) {
                     $backend->editPost($_GET['id'], $_POST['title'], $_POST['content']);
                 } else {
-                    throw new Exception('Impossible de modifier le commentaire');
+                    throw new \Exception('Impossible de modifier le billet');
                 }
             } else {
-                throw new Exception('Aucun identifiant de billet envoyé !');
+                throw new \Exception('Aucun identifiant de billet envoyé !');
             }
         }
-        elseif ($_GET['action'] == 'deletePost') {
+        elseif ($_GET['action'] === 'confirmDeletePost') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $backend->confirmDeletePost($_GET['id']);
+                 } else {
+                throw new \Exception('Aucun identifiant de billet envoyé !');
+            }
+        }
+        elseif ($_GET['action'] === 'deletePost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $backend->deletePost($_GET['id']);
             } else {
-                throw new Exception('Aucun identifiant de billet envoyé !');
+                throw new \Exception('Aucun identifiant de billet envoyé !');
             }
-        } elseif ($_GET['action'] == 'reportComment') {
+        } elseif ($_GET['action'] === 'reportComment') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) { 
-                $frontend->getComment($_GET['id']);
+                    $frontend->reportComment($_GET['id']);
                 }
                 else {
-                    throw new Exception('Aucun identifiant de commentaire envoyé !');
+                    throw new \Exception('Aucun identifiant de commentaire envoyé !');
                 }
-            }
-        else {
-            $frontend->listPosts();
-            }
+            }elseif ($_GET['action'] === 'removeReport'){
+                if (isset($_GET['id']) && $_GET['id'] > 0){
+                    $backend->removeReport($_GET['id']);
+                }
+                else {
+                    throw new \Exception('Aucun identifiant de commentaire envoyé !');
+                }
+        }elseif ($_GET['action'] === 'login'){
+            $authentification->login();
+        }elseif ($_GET['action'] === 'dashboard'){
+            $backend->dashboard();
+        }
+    }
+    else {
+        $frontend->listPosts();
+        }
     }
 }

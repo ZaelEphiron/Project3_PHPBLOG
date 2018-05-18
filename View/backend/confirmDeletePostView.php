@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<?php $title = htmlspecialchars($post['title']); ?>
+<?php $title = "Supprimer un billet"; ?>
 
 <head>
     <h1>Formulaire de suppression de billet :</h1>
@@ -7,9 +7,9 @@
 
 <body>
     <h2>Êtes-vous sûr de vouloir supprimer ce billet ?</h2>
-    <form action ="index.php?action=deletePost" method="post">
+    <form action ="index.php?action=deletePost&amp;id=<?= $_GET['id']?>" method="post">
         <div>
-            <input type="checkbox" name="yes" id="yes" /> <label for="frites">Oui</label><br />
+            <input type="checkbox" name="yes" id="yes" /> <label for="yes">Oui</label><br />
         </div>
         <div>
             <input type="checkbox" name="no" id="no" /> <label for="no">Non</label><br />
@@ -22,4 +22,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>

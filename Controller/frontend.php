@@ -1,39 +1,39 @@
 <?php
 
-require_once('model/postsManager.php');
-require_once('model/commentsManager.php');
+namespace BlogPHP\Controller;
 
 // Chargement des classes
-use \Blogphp\Model\postsManager;
-use \Blogphp\Model\commentsManager;
+use BlogPHP\Model\PostsManager;
+use BlogPHP\Model\CommentsManager;
+use BlogPHP\Model\UsersManager;
 
 class Frontend {
 
     public function listPosts()
     {
-        $postManager = new PostManager();
-        $posts = $postManager->getPosts();
+        $PostsManager = new PostsManager();
+        $Posts = $PostsManager->getPosts();
         require('view/frontend/listPostsView.php');
     }
 
     public function post()
     {
-        $postManager = new postManager();
-        $commentManager = new commentManager();
+        $PostsManager = new PostsManager();
+        $CommentsManager = new CommentsManager();
 
-        $post = $postManager->getPost($_GET['id']);
-        $comments = $commentManager->getComments($_GET['id']);
-    
+        $Post = $PostsManager->getPost($_GET['id']);
+        $Comments = $CommentsManager->getComments($_GET['id']);
+        
         require('view/frontend/postView.php');
     }
 
-    public function addComment($postID, $author, $comment)
+    public function addComment($postID, $author, $Comment)
     {
-        $commentManager = new commentManager();
+        $CommentsManager = new CommentsManager();
     
-        $comment = $commentManager->postComment($postID, $author, $comment);
+        $Comment = $CommentsManager->addComment($postID, $author, $Comment);
     
-        if($comment == false){
+        if($Comment == false){
             throw new Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
@@ -43,23 +43,21 @@ class Frontend {
 
     public function getComment($commentID)
     {
-        $commentManager = new commentManager();
+        $CommentsManager = new CommentsManager();
     
-        $comment = $commentManager->getComment($_GET['id']);
+        $Comment = $CommentsManager->getComment($_GET['id']);
     
-        require('view/frontend/updateCommentView.php');
+        require('view/frontend/editCommentView.php');
     }
 
-    public function editComment($commentID, $comment)
+    public function editComment($commentID, $Comment)
     {
-        $commentManager = new commentManager();
+        $CommentsManager = new CommentsManager();
     
-        $affectedComment = $commentManager->editComment($commentID, $comment);
+        $affectedComment = $CommentsManager->editComment($commentID, $Comment);
     
-        $comment = $commentManager->getComment($commentID);
-        $postID = $comment['post_id'];
-    
-        $comment='Test';
+        $Comment = $CommentsManager->getComment($commentID);
+        $postID = $Comment['post_id'];
     
         if($affectedComment == false){
             throw new Exception('Erreur lors de la modification !');
@@ -70,21 +68,12 @@ class Frontend {
         }
     }
 
-    public function deleteComment($postId, $commentID, $comment)
+    public function reportComment($commentID)
     {
-        $commentManager = new commentManager();
-    
-        $affectedComment = $commentManager->deleteComment($id, $content);
-    
-        require('view/frontend/deleteCommentView.php');
-    }
-
-    public function reportComment($id, $postId, $commentID, $comment)
-    {
-        $commentManager = new commentManager();
+        $CommentsManager = new CommentsManager();
         
-        $affectedComment = $commentManager->reportComment($id, $postId, $commentID $comment);
-            
-        require('view/frontend/reportCommentView.php');
+        $affectedComment = $CommentsManager->reportComment($commentID);
+
+        header('Location: index.php?action=listPosts');
     }
 }

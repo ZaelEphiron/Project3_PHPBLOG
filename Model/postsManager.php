@@ -2,55 +2,50 @@
 
 namespace BlogPHP\Model;
 
-require_once("Model/manager.php");
-require("Entity/post.php");
-
-use Blogphp\Model\Manager;
-
-class postManager extends Manager 
+class PostsManager extends Manager 
 {   
     
-public function getPosts()
-{
-    $db = $this->dbConnect();
-    $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts ORDER BY creation_date_fr DESC LIMIT 0,5');
+    public function getPosts()
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts ORDER BY creation_date_fr DESC LIMIT 0,5');
     
-    return $req;
-}
+        return $req;
+    }
 
-public function getPost($_id)
-{
-    $db = $this->dbConnect();
-    $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts WHERE id = ?');
-    $req->execute(array($_id));
-    $post = $req->fetch();
+    public function getPost($_id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts WHERE id = ?');
+        $req->execute(array($_id));
+        $Post = $req->fetch();
     
-    return $post;
-}
+        return $Post;
+    }
 
-public function addPost($_id, $_title, $_content)
-{
-    $db = $this->dbConnect();
-    $req = $db->prepare('INSERT INTO posts (id, title, content, creation_date) VALUES(?,?,?, NOW())');
-    $comment = $req->execute(array($_id, $_author, $_comment));
+    public function addPost($_title, $_content)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO posts (title, content, creation_date) VALUES(?,?, NOW())');
+        $Post = $req->execute(array($_title, $_content));
     
-    return $comment;
-}
+        return $Post;
+    }
 
 
-public function editPost($_id, $_title, $_content)
-{
-    $db = $this->dbConnect();
-    $req = $db->prepare('UPDATE post SET id, title, content');
-    $post = $req->execute(array($_id, $_title, $_content));
-    
-    return $post;
-}
+    public function editPost($_id, $_title, $_content)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('UPDATE posts SET title = ?, content = ? WHERE id= ?');
+        $Post = $req->execute(array($_title, $_content, $_id));
+        
+        return $Post;
+    }
 
-public function deletePost($_id, $_title, $_content)
-{
-    $db = $this->dbConnect();
-    $req = $db->prepare('DELETE FROM posts WHERE post');
-    $req->execute(array($_id, $_title, $_content));
-}
+    public function deletePost($_id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM posts WHERE id = ?');
+        $Post = $req->execute(array($_id));
+    }
 }

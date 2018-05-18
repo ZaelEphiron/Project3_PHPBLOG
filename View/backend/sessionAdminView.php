@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<?php $title = htmlspecialchars($post['title']); ?>
+<?php $title = "Login"; ?>
 
 <head>
     <h1>Zone d'authentification :</h1>
@@ -19,11 +19,11 @@
             <br />
         </div>
         <div>
-            <input type="submit" value ="Modifier" />
+            <input type="submit" value ="Confirmer" />
         </div>
     </form>    
 </body>
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>

@@ -1,8 +1,8 @@
 <?php ob_start(); ?>
-<?php $title = htmlspecialchars($post['title']); ?>
+<?php $title = "Ajouter un commentaire"; ?>
 
 <head>
-<h1>Formulaire d'ajout de commentaire :</h1>
+    <h1>Formulaire d'ajout de commentaire :</h1>
 </head>
 
 <body>
@@ -23,5 +23,5 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>
 

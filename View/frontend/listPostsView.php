@@ -2,14 +2,27 @@
 <?php $title ='Mon blog'; ?>
 
 <head>
-    <a href="listPostsView.php">Accueil</a>
-    <h1>Bienvenue sur le blog de Jean Forteroche !</h1>
-
+    <style type="text/css">
+        body { padding-top: 70px; }
+    </style>  
 </head>
 
 <body>
-    <h2>Description de l'artiste :</h2>
-    <a href="index.php?action=sessionAdminView">Se connecter</a>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Bienvenue sur le blog de Jean Forteroche !</a>
+        </div>
+            <ul class="nav navbar-nav">
+                <li class="active"> <a href="index.php?action=listPosts">Accueil</a> </li>
+                <li><a href="index.php?action=login">Se connecter</a></li>
+                <li><a href="index.php?action=dashboard">Tableau de bord</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <p><h2>Description de l'artiste :</h2></p>
+
     <p>Bonjour et bienvenue sur mon blog !
  
         Je suis un artiste écrivain et ceci sera le blog où je posterai, en avant première, les pages de mon nouveau roman en cours de rédaction. Je posterai donc régulièrement les pages, au fûr et à mesure de leur création, les unes-après les autres et comptent sur vous pour commenter ses pages dans le but de recueillir vos idées et ainsi d'améliorer le contenu de ce roman qui s'intitulera : "Billet simple pour l'Alaska".
@@ -18,15 +31,13 @@
 
     <h2>Derniers billets du blog :</h2>
 <?php
-while ($data = $posts->fetch())
+while ($data = $Posts->fetch())
 {
 ?>
 <div class="news">
     <h3>
         <?= htmlspecialchars($data['title']) ?>
         <em>le <?= $data['creation_date_fr'] ?></em>
-        <a href="editPostView.php">Modifier le billet.</a>
-        <a href="deletePostView.php">Supprimer le billet.</a>
     </h3>
     
     <p>
@@ -37,11 +48,10 @@ while ($data = $posts->fetch())
 </div>
 <?php
 }
-$posts->closeCursor();
-?>
-    
-<a href="addPostView.php">Ajouter un billet</a> 
+$Posts->closeCursor();
+?>    
+<a href="index.php?action=newPost">Ajouter un billet</a> 
 </body>
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/template.php'); ?>

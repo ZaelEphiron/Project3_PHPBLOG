@@ -1,6 +1,5 @@
 <?php
 namespace BlogPHP\Entity;
-require("Entity/entity.php");
 
 use BlogPHP\Entity\Entity;
 

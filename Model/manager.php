@@ -2,8 +2,8 @@
 
 namespace BlogPHP\Model;
 
-class Manager {
-    
+class Manager 
+{
     protected function dbConnect()
         {
             try{

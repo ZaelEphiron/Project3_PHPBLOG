@@ -2,70 +2,123 @@
 
 namespace BlogPHP\Controller;
 
-require_once('model/PostsManager.php');
-require_once('model/CommentsManager.php');
-
 // Chargement des classes
-use \Blogphp\Model\PostsManager;
-use \Blogphp\Model\CommentsManager;
+use BlogPHP\Model\PostsManager;
+use BlogPHP\Model\CommentsManager;
+use BlogPHP\Model\UsersManager;
 
 class Backend {
-
-    public function addPost($postId, $title, $content)
+    
+    public function newPost()
     {
-        $postManager = new postManager();
+        require('view/backend/addPostView.php');
+    }
     
-        $post = $postManager->addPost($postId, $title, $content);
-
-        require('view/frontend/addPostView.php');
+    public function addPost($title, $content)
+    {
+        $PostsManager = new PostsManager();
     
-        if($post == false)
+        $Post = $PostsManager->addPost($title, $content);
+    
+        if($Post == false)
         {
-            throw new Exception('Impossible d\'ajouter le billet !');
+            throw new \Exception('Impossible d\'ajouter le billet !');
         }
         else {
-            header('Location: index.php?action=addPost');
+            header('Location: index.php?action=listPosts');
             exit();
         }
     }
 
-    public function getPost($postId) 
+    public function getPost($id) 
     {
-        $postManager = new postManager();
+        $PostsManager = new PostsManager();
     
-        $post = $postManager->getPost($postId);
+        $Post = $PostsManager->getPost($id);
+        
+        require('view/backend/editPostView.php');
     }
 
-    public function editPost($postId, $title, $content)
+    public function editPost($id, $title, $content)
     {
-        $postManager = new postManager();
+        $PostsManager = new PostsManager();
     
-        $post = $postManager->editPost($postId, $title, $content);
-    
-        require('view/frontend/editPostView.php');
-    
-        if($post == false)
+        $Post = $PostsManager->editPost($id, $title, $content);
+        
+        if($Post == false)
         {
-            throw new Exception('Impossible d\'ajouter le billet !');
+            throw new \Exception('Impossible d\'ajouter le billet !');
         }
     
         else{
-            header('Location: index.php?action=editPost');
+            header('Location: index.php?action=listPosts');
             exit();
         }
     }
 
-    public function deletePost($postId, $title, $content)
+    public function confirmDeletePost($id)
     {
-        $postManager = new postManager();
-    
-        $post = $postManager->deletePost($postId, $title, $content);
-    
-        require('view/frontend/deletePostView.php');
+        require('view/backend/confirmDeletePostView.php');
     }
     
-    public function sessionAdmin()
+    public function deletePost($id)
+    {
+        $PostsManager = new PostsManager();
+    
+        $Post = $PostsManager->deletePost($id);
+        
+        if($Post == false)
+        {
+            throw new \Exception('Impossible de supprimer le billet !');
+        }
+        else{
+            header('Location: index.php?action=listPosts');
+            exit();
+            }
+    }
+    
+    public function removeReport($commentID)
+    {
+        $CommentsManager = new CommentsManager();
+        
+        $affectedComment = $CommentsManager->removeReport($commentID);
+
+        header('Location: index.php?action=listPosts');
+    }
+    
+    public function confirmDeleteComment($commentID)
+    {
+        require('view/backend/confirmDeleteCommentView.php');
+    }
+    
+    public function deleteComment($commentID)
+    {
+        $CommentsManager = new CommentsManager();
+    
+        $affectedComment = $CommentsManager->deleteComment($commentID);
+        
+        if($affectedComment == false)
+        {
+            throw new \Exception('Impossible de supprimer le commentaire !');
+        }
+        else{
+            header('Location: index.php?action=listPosts');
+            exit();
+            }
+    }
+    
+    public function dashboard()
     {
         
+        $PostsManager = new PostsManager();
+        $Posts = $PostsManager->getPosts();
+        
+        $CommentsManager = new CommentsManager();
+        $Comments = $CommentsManager->getComments();
+        
+        /*$UsersManager = new UsersManager();
+        $users = $UsersManager->getUsers($id, $pseudo, $password, $mail, $role);*/
+        
+        require("View/backend/adminDashboardView.php");
     }
 }
