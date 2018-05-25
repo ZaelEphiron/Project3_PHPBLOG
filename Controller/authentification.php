@@ -19,7 +19,7 @@ class Authentification {
         $User = $UsersManager->verifId($_POST['pseudo']);
     
         if($User->getPassword() != password_hash($_POST['password'], PASSWORD_BCRYPT)){
-            throw new Exception('Les identifiants ne correspondent pas');
+            throw new \Exception('Les identifiants ne correspondent pas');
         }
         else {
             header('Location: index.php');
@@ -34,7 +34,7 @@ class Authentification {
         $User = $UsersManager->addUser($id, $pseudo, password_hash($password, PASSWORD_BCRYPT), $mail, $role);
     
         if($User == false){
-            throw new Exception('L\'inscription n\'a pas pu aboutir !');
+            throw new \Exception('L\'inscription n\'a pas pu aboutir !');
         }
         else {
             header('Location: index.php');
@@ -50,40 +50,45 @@ class Authentification {
         //require('view/frontend/deleteCommentView.php');
     }
     
-    public function getUser($_id, $pseudo, $_password, $_mail, $_role)
+    public function getUser($id, $pseudo, $password, $mail, $role)
     {
         $UsersManager = new UsersManager();
     
-        $user = $UsersManager->getUser($_GET['id']);
+        $User = $UsersManager->getUser($_GET['id']);
     
         //require('view/frontend/updateCommentView.php');
     }
         
-    public function getUsers($_id, $pseudo, $_password, $_mail, $_role)
+    public function getUsers($id, $pseudo, $password, $mail, $role)
     {
         $UsersManager = new UsersManager();
         
-        $users = $UsersManager->getUsers();
+        $Users = $UsersManager->getUsers();
         
         //require('view/frontend/listPostsView.php');  
     }
     
     public function login()
     {
+        
         require("View/frontend/loginView.php");
     }
     
-    public function isAdmin()
+    public function checkLog($pseudo, $password)
     {
         $UsersManager = new UsersManager();
         
-        $User = $UsersManager->getUser($_GET['id']);
+        $User = $UsersManager->verifId($pseudo);
         
-        if($User['role'] == 'admin')
-        {
-            return true;
-        } else{
-            return false;
+        if($User === false){
+            throw new \Exception('Les identifiants sont invalides');
+        }else{
+            if(password_verify($password, $User['password'])){
+                echo 'connecté';
+            }else{
+                echo 'Erreur';
+            }
+        }
+            
         }
     }
-}

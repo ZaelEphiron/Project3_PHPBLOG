@@ -78,4 +78,14 @@ class User extends Entity {
             $this->role = $role;
         }
     }
+    
+    public function isAdmin()
+    {       
+        if($this->role == 'admin')
+        {
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

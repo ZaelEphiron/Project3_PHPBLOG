@@ -8,8 +8,8 @@ class UsersManager extends Manager
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, pseudo, password FROM users WHERE pseudo = ?');
-        $User = $req->execute(array($_pseudo));
-        
+        $req->execute(array($_pseudo));
+        $User = $req->fetch();
         return $User;
     }    
     
@@ -42,5 +42,6 @@ class UsersManager extends Manager
         $Users = $db->prepare('SELECT id, pseudo, password, mail, role FROM users ORDER BY id DESC');
         $Users->execute();        
         return $Users;
-    }        
+    }
+    
 } 

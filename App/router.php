@@ -130,6 +130,12 @@ class Router
                 }
         }elseif ($_GET['action'] === 'login'){
             $authentification->login();
+        }elseif ($_GET['action'] === 'checkLog'){
+            if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
+                        $authentification->checkLog($_POST['pseudo'], $_POST['password']);
+                    } else{
+                        throw new \Exception('Tous les champs ne sont pas remplis !');
+                    }   
         }elseif ($_GET['action'] === 'dashboard'){
             $backend->dashboard();
         }
