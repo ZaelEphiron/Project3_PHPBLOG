@@ -84,11 +84,16 @@ class Authentification {
             throw new \Exception('Les identifiants sont invalides');
         }else{
             if(password_verify($password, $User['password'])){
-                echo 'connecté';
+                $_SESSION['pseudo'] = $pseudo;
+                $_SESSION['role'] = $User['role'];
+                    if($User['role'] == 'admin'){
+                        header('Location: index.php?action=dashboard');
+                    }else{
+                    echo 'Connecté';
+                    }
             }else{
                 echo 'Erreur';
             }
-        }
-            
-        }
+        }    
     }
+}

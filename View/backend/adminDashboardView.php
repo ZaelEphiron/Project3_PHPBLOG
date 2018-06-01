@@ -14,25 +14,25 @@ while ($data = $Posts->fetch())
         <h3>
             <?= htmlspecialchars($data['title']) ?>
             <em>le <?= $data['creation_date_fr'] ?></em>
+             <a href="index.php?action=getPost&amp;id=<?= $data['id'] ?>">Modifier le billet.</a>
+            <a href="index.php?action=confirmDeletePost&amp;id=<?= $data['id'] ?>">Supprimer le billet.</a>
         </h3>
-    
-        <p>
-            <?= nl2br(htmlspecialchars($data['content'])) ?>
-        </p>
-    <?php
+<?php
 }
 $Posts->closeCursor();
 ?>
+        <h3><a href="index.php?action=newPost">Ajouter un billet</a></h3> 
+        
     </div>
+    
     <div class="news">
         <?php
         while($Comment = $Comments->fetch())
         {
         ?>
         <h3>
-            <strong><?= htmlspecialchars($Comment['author']) ?></strong> le <?= $Comment['comment_date_fr'] ?>
-        </p>
-        <h3><?= nl2br(htmlspecialchars($Comment['comment'])) ?></h3>
+            <strong><?= htmlspecialchars($Comment['author']) ?></strong> le <?= $Comment['comment_date_fr'] ?> <br />
+            <?= nl2br(htmlspecialchars($Comment['comment'])) ?></h3>
         <?php
         if($Comment['report'] != 0){
         ?>
@@ -45,6 +45,7 @@ $Posts->closeCursor();
         }
         ?>
     </div>
+    
     <div class="news">
         <?php
         while($User = $Users->fetch())

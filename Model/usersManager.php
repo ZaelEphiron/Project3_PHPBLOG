@@ -7,7 +7,7 @@ class UsersManager extends Manager
     public function verifId($_pseudo)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, pseudo, password FROM users WHERE pseudo = ?');
+        $req = $db->prepare('SELECT id, pseudo, password, role FROM users WHERE pseudo = ?');
         $req->execute(array($_pseudo));
         $User = $req->fetch();
         return $User;

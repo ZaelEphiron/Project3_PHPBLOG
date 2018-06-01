@@ -16,7 +16,9 @@
             <ul class="nav navbar-nav">
                 <li class="active"> <a href="index.php?action=listPosts">Accueil</a> </li>
                 <li><a href="index.php?action=login">Se connecter</a></li>
+                <!--
                 <li><a href="index.php?action=dashboard">Tableau de bord</a></li>
+                -->
             </ul>
         </div>
     </div>
