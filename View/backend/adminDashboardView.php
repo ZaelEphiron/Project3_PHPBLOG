@@ -3,6 +3,7 @@
 
 <head>
     <h1>Tableau de bord d'administration du blog :</h1>
+<p><a href="index.php?action=listPosts">Retour accueil</a></p>
 </head>
 
 <body>

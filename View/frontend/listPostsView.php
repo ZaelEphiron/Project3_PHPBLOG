@@ -1,4 +1,5 @@
 <?php ob_start(); ?>
+<?php session_start(); ?>
 <?php $title ='Mon blog'; ?>
 
 <head>
@@ -53,9 +54,18 @@ while ($data = $Posts->fetch())
 $Posts->closeCursor();
 ?>    
 
+<?php
+if ($_SESSION['role'] == 'admin' && $_SESSION['pseudo'] == 'Forteroche'){
+?>    
+
 <a href="index.php?action=newPost">Ajouter un billet</a> 
 
+<?php
+}
+?>
 </body>
-<?php $content = ob_get_clean(); ?>
 
+<?php $content = ob_get_clean(); ?>
+<?php session_unset(); ?>
+<?php session_destroy(); ?>
 <?php require('view/template.php'); ?>
