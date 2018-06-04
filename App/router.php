@@ -128,6 +128,8 @@ class Router
                 else {
                     throw new \Exception('Aucun identifiant de commentaire envoyé !');
                 }
+        }elseif ($_GET['action'] === 'inscription'){
+            $authentification->inscription(); 
         }elseif ($_GET['action'] === 'login'){
             $authentification->login();
         }elseif ($_GET['action'] === 'checkLog'){

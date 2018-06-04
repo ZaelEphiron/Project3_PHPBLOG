@@ -16,7 +16,7 @@ class UsersManager extends Manager
     public function addUser($_id, $_pseudo, $_password, $_mail, $_role)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO users (id, password, mail, role) VALUES(?,?,?,?');
+        $req = $db->prepare('INSERT INTO users (id, pseudo, password, mail, role) VALUES(?,?,?,?');
         $User = $req->execute(array($_id, $_pseudo, $_password, $_mail, $_role)); 
     }
         
@@ -43,5 +43,4 @@ class UsersManager extends Manager
         $Users->execute();        
         return $Users;
     }
-    
 } 

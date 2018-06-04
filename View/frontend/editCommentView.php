@@ -1,6 +1,5 @@
 <?php ob_start(); ?>
 <?php $title = "Modifier un commentaire"; ?>
-<p><a href="index.php?action=listPosts">Accueil</a></p>
 
 <head>
     <h1>Formulaire de modification de commentaire :</h1>

@@ -22,7 +22,7 @@ class Authentification {
             throw new \Exception('Les identifiants ne correspondent pas');
         }
         else {
-            header('Location: index.php');
+            header('Location: index.php?action=listPosts');
         }
     }
 }
@@ -37,7 +37,7 @@ class Authentification {
             throw new \Exception('L\'inscription n\'a pas pu aboutir !');
         }
         else {
-            header('Location: index.php');
+            header('Location: index.php?action=listPosts');
         }
     }
         
@@ -66,6 +66,20 @@ class Authentification {
         $Users = $UsersManager->getUsers();
         
         //require('view/frontend/listPostsView.php');  
+    }
+    
+    public function inscription()
+    {
+        require("View/frontend/inscriptionView.php");
+    }
+    
+    public function confirmedInscription($id, $pseudo, $password, $email, $role){
+        
+        $UsersManager = new UsersManager();
+        
+        $User = $UsersManager->addUser($id, $pseudo, $password, $email, $role);
+        
+        
     }
     
     public function login()
