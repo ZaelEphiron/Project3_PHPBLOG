@@ -57,11 +57,5 @@
                         </section>
                 </div>
         </div>        
-    <script src="scripts/js/jquery.min.js"></script>
-    <script src="scripts/js/jquery.scrollzer.min.js"></script>
-    <script src="scripts/js/jquery.scrolly.min.js"></script>
-    <script src="scripts/js/skel.min.js"></script>
-    <script src="scripts/js/util.js"></script>
-    <script src="scripts/js/main.js"></script>
     </body>
 </html>

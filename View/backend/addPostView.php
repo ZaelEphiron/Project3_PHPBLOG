@@ -3,9 +3,10 @@
 
 <head>
     <h1>Formulaire d'ajout de billet :</h1>
+    <script src="js/tinymce.min.js"></script>
 </head>
 
-<body>
+<body onload="tinymce.init({selector:'textarea'})">
     <form action ="index.php?action=addPost" method="post">
         <div>
             <label for="title">Titre</label><br />
@@ -13,7 +14,7 @@
         </div>
         <div>
             <label for="content">Contenu</label><br />
-            <textarea id="content" name="content"></textarea>
+            <textarea class="tinymce" id="content" name="content"></textarea>
         </div>
         <div>
             <input type="submit" />
