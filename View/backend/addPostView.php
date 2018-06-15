@@ -1,12 +1,10 @@
 <?php ob_start(); ?>
 <?php $title = "Nouvel article"; ?>
 
-<head>
+<header class="major">
     <h1>Formulaire d'ajout de billet :</h1>
-    <script src="js/tinymce.min.js"></script>
-</head>
+</header>
 
-<body onload="tinymce.init({selector:'textarea'})">
     <form action ="index.php?action=addPost" method="post">
         <div>
             <label for="title">Titre</label><br />
@@ -20,7 +18,13 @@
             <input type="submit" />
         </div>
     </form>
-</body>
+
+<script src="Public/assets/js/tinymce/tinymce.min.js"></script>
+<script>
+  tinymce.init({
+    selector: '.tinymce'
+  });
+  </script>
 
 <?php $content = ob_get_clean(); ?>
 

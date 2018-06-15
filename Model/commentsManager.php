@@ -9,7 +9,7 @@ class CommentsManager extends Manager
         $db = $this->dbConnect();
         
         if($_post_id == null){
-            $Comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr, report FROM comments ORDER BY comment_date DESC');
+            $Comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr, report FROM comments ORDER BY report DESC');
             $Comments->execute();
         }else{
             $Comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr, report FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
@@ -68,7 +68,7 @@ class CommentsManager extends Manager
     public function removeReport($_id)
     {
         $db = $this->dbConnect();
-        $Comment = $db->prepare('DELETE report FROM comments WHERE id=?');
+        $Comment = $db->prepare('UPDATE comments SET comments.report = 0 WHERE comments.id=?');
         $afectedComment = $Comment->execute(array($_id));
         
         return $affectedComment;

@@ -130,6 +130,12 @@ class Router
                 }
         }elseif ($_GET['action'] === 'inscription'){
             $authentification->inscription(); 
+        }elseif ($_GET['action'] === 'addUser'){
+            if (!empty($_POST['pseudo']) && !empty($_POST['password']) && !empty($_POST['email'])){
+            $authentification->addUser($_POST['pseudo'], $_POST['password'], $_POST['email']);
+            }else{
+                throw new \Exception('Tous les champs ne sont pas remplis correctement !');
+            }
         }elseif ($_GET['action'] === 'login'){
             $authentification->login();
         }elseif ($_GET['action'] === 'checkLog'){
@@ -140,6 +146,8 @@ class Router
                     }   
         }elseif ($_GET['action'] === 'dashboard'){
             $backend->dashboard();
+        }elseif ($_GET['action'] === 'logout'){
+            $authentification->logout();
         }
     }
     else {

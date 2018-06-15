@@ -27,11 +27,11 @@ class Authentification {
     }
 }
     
-    public function addUser($id, $pseudo, $password, $mail, $role)
+    public function addUser($pseudo, $password, $mail)
     {
         $UsersManager = new UsersManager();
     
-        $User = $UsersManager->addUser($id, $pseudo, password_hash($password, PASSWORD_BCRYPT), $mail, $role);
+        $User = $UsersManager->addUser($pseudo, password_hash($password, PASSWORD_BCRYPT), $mail);
     
         if($User == false){
             throw new \Exception('L\'inscription n\'a pas pu aboutir !');
@@ -73,19 +73,17 @@ class Authentification {
         require("View/frontend/inscriptionView.php");
     }
     
-    public function confirmedInscription($id, $pseudo, $password, $email, $role){
-        
-        $UsersManager = new UsersManager();
-        
-        $User = $UsersManager->addUser($id, $pseudo, $password, $email, $role);
-        
-        
-    }
-    
     public function login()
     {
-        
         require("View/frontend/loginView.php");
+    }
+    
+    public function logout()
+    {
+        session_unset();
+        session_destroy();
+        
+        header('Location: index.php?action=listPosts');
     }
     
     public function checkLog($pseudo, $password)

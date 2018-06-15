@@ -13,11 +13,11 @@ class UsersManager extends Manager
         return $User;
     }    
     
-    public function addUser($_id, $_pseudo, $_password, $_mail, $_role)
+    public function addUser($_pseudo, $_password, $_mail)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO users (id, pseudo, password, mail, role) VALUES(?,?,?,?');
-        $User = $req->execute(array($_id, $_pseudo, $_password, $_mail, $_role)); 
+        $req = $db->prepare('INSERT INTO users (pseudo, password, mail) VALUES(?,?,?)');
+        $User = $req->execute(array($_pseudo, $_password, $_mail)); 
     }
         
     public function deleteUser($_id, $_pseudo, $_password, $_mail, $_role)

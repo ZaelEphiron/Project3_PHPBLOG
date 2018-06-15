@@ -1,11 +1,10 @@
 <?php ob_start(); ?>
 <?php $title = "Ajouter un commentaire"; ?>
 
-<head>
+<header class="major">
     <h1>Formulaire d'ajout de commentaire :</h1>
-</head>
+</header>
 
-<body>
     <form action ="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
         <div>
             <label for="author">Auteur</label><br />
@@ -19,9 +18,6 @@
             <input type="submit" />
         </div>
     </form>
-</body>
 
 <?php $content = ob_get_clean(); ?>
-
 <?php require('view/template.php'); ?>
-
