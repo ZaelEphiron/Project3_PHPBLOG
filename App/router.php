@@ -131,8 +131,8 @@ class Router
         }elseif ($_GET['action'] === 'inscription'){
             $authentification->inscription(); 
         }elseif ($_GET['action'] === 'addUser'){
-            if (!empty($_POST['pseudo']) && !empty($_POST['password']) && !empty($_POST['email'])){
-            $authentification->addUser($_POST['pseudo'], $_POST['password'], $_POST['email']);
+            if (!empty($_POST['pseudo']) && !empty($_POST['password']) && !empty($_POST['mail'])){
+            $authentification->addUser($_POST['pseudo'], $_POST['password'], $_POST['mail']);
             }else{
                 throw new \Exception('Tous les champs ne sont pas remplis correctement !');
             }

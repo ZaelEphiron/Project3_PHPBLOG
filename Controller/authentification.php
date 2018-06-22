@@ -32,7 +32,12 @@ class Authentification {
         $UsersManager = new UsersManager();
     
         $User = $UsersManager->addUser($pseudo, password_hash($password, PASSWORD_BCRYPT), $mail);
-    
+        
+        var_dump($pseudo);
+        var_dump($password);
+        var_dump($mail);
+        var_dump($User);
+        
         if($User == false){
             throw new \Exception('L\'inscription n\'a pas pu aboutir !');
         }

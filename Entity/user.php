@@ -8,7 +8,7 @@ class User extends Entity {
         
     private $password;
     
-    private $mail;    
+    private $email;    
     
     private $role;
         
@@ -63,7 +63,7 @@ class User extends Entity {
         }
     }
     
-    public function setMail()
+    public function setEmail()
     {
         if (is_string($email))
         {
