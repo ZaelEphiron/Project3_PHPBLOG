@@ -5,6 +5,9 @@
     <h1>Formulaire d'ajout de billet :</h1>
 </header>
 
+<?php if (array_key_exists('error', $_SESSION)){
+            var_dump($_SESSION['error']);
+        } ?>
     <form action ="index.php?action=addPost" method="post">
         <div>
             <label for="title">Titre</label><br />

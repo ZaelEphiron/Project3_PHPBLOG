@@ -28,7 +28,7 @@ class Frontend {
     }
 
     public function addComment($postID, $author, $Comment)
-    {
+    {   
         $CommentsManager = new CommentsManager();
     
         $Comment = $CommentsManager->addComment($postID, $author, $Comment);
@@ -51,7 +51,7 @@ class Frontend {
     }
 
     public function editComment($commentID, $Comment)
-    {
+    {   
         $CommentsManager = new CommentsManager();
     
         $affectedComment = $CommentsManager->editComment($commentID, $Comment);

@@ -16,10 +16,28 @@ class Backend {
     
     public function addPost($title, $content)
     {
+        $error = [];
+        
+        $trimmed = trim($title);
+        
+        var_dump($trimmed);
+        
+        if (strlen($title) < 3){
+            $error[] = "Titre trop court !";
+        }
+        if (count($error) != 0){
+            
+            $_SESSION['error'] = $error; 
+                
+            header('Location: index.php?action=newPost');
+            exit();
+        }
+        
+        
+        
         $PostsManager = new PostsManager();
-    
         $Post = $PostsManager->addPost($title, $content);
-    
+        
         if($Post == false)
         {
             throw new \Exception('Impossible d\'ajouter le billet !');
@@ -40,7 +58,18 @@ class Backend {
     }
 
     public function editPost($id, $title, $content)
-    {
+    {   
+        $error = [];
+        
+        if (strlen($title) < 3){
+            $error[] = "Titre trop court !";
+        }
+        if (count($error) != 0){
+            
+            header('Location: index.php?action=newPost');
+            exit();
+        }
+        
         $PostsManager = new PostsManager();
     
         $Post = $PostsManager->editPost($id, $title, $content);
@@ -56,7 +85,7 @@ class Backend {
         }
     }
 
-    public function confirmDeletePost($id)
+    public function confirmDeletePost()
     {
         require('view/backend/confirmDeletePostView.php');
     }
@@ -86,7 +115,7 @@ class Backend {
         header('Location: index.php?action=listPosts');
     }
     
-    public function confirmDeleteComment($commentID)
+    public function confirmDeleteComment()
     {
         require('view/backend/confirmDeleteCommentView.php');
     }

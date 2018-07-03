@@ -9,4 +9,3 @@ BlogPHP\App\Autoloader::register();
 
 $router = new BlogPHP\App\Router();
 $router->getRoute($_SERVER['REQUEST_URI']);
-?>

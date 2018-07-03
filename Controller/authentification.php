@@ -33,11 +33,6 @@ class Authentification {
     
         $User = $UsersManager->addUser($pseudo, password_hash($password, PASSWORD_BCRYPT), $mail);
         
-        var_dump($pseudo);
-        var_dump($password);
-        var_dump($mail);
-        var_dump($User);
-        
         if($User == false){
             throw new \Exception('L\'inscription n\'a pas pu aboutir !');
         }
@@ -50,28 +45,24 @@ class Authentification {
     {
         $UsersManager = new UsersManager();
     
-        $affectedUser = $UsersManager->deleteUser($id, $pseudo, $password, $mail, $role);
-    
-        //require('view/frontend/deleteCommentView.php');
+        $UsersManager->deleteUser($id, $pseudo, $password, $mail, $role);
     }
     
-    public function getUser($id, $pseudo, $password, $mail, $role)
+    /*
+    public function getUser()
     {
         $UsersManager = new UsersManager();
     
         $User = $UsersManager->getUser($_GET['id']);
-    
-        //require('view/frontend/updateCommentView.php');
     }
         
-    public function getUsers($id, $pseudo, $password, $mail, $role)
+    public function getUsers()
     {
         $UsersManager = new UsersManager();
         
         $Users = $UsersManager->getUsers();
-        
-        //require('view/frontend/listPostsView.php');  
     }
+    */
     
     public function inscription()
     {

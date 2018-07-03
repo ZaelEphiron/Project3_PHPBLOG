@@ -7,7 +7,7 @@ use BlogPHP\Controller\Authentification;
 
 class Router
 {   
-    public function getRoute($url)
+    public function getRoute()
     {
         $frontend = new Frontend();
         $backend = new Backend();
