@@ -8,7 +8,7 @@ use BlogPHP\Model\CommentsManager;
 use BlogPHP\Model\UsersManager;
 
 class Frontend {
-
+    
     public function listPosts()
     {
         $postsManager = new PostsManager();
@@ -122,5 +122,10 @@ class Frontend {
         $affectedComment = $commentsManager->reportComment($commentId);
 
         header('Location: index.php?action=listPosts');
+    }
+    
+    public function error404()
+    {
+        header('Location: index.php?action=error404');
     }
 }

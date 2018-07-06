@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
         <title><?= $title ?></title>
         <link href="public/assets/css/main.css" rel="stylesheet"/>
+         <link href="public/assets/css/second.css" rel="stylesheet"/>
     </head>
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
