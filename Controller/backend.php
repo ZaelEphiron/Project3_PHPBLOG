@@ -6,8 +6,16 @@ namespace BlogPHP\Controller;
 use BlogPHP\Model\PostsManager;
 use BlogPHP\Model\CommentsManager;
 use BlogPHP\Model\UsersManager;
+use BlogPHP\App\Response;
 
 class Backend {
+    
+    private $response;
+    
+    public function __construct()
+    {
+        $this->response = new Response();
+    }
     
     public function newPost()
     {
@@ -18,12 +26,21 @@ class Backend {
     {
         $error = [];
         
-        $trimmed = trim($title);
+        $trimmedTitle = trim($title);
         
-        var_dump($trimmed);
+        $trimmedContent = trim($content);
         
-        if (strlen($title) < 3){
+        if (strlen($trimmedTitle) < 3){
             $error[] = "Titre trop court !";
+        }
+        if (strlen($trimmedContent) < 3){
+            $error[] = "Contenu trop court !";
+        }
+        if (strlen($trimmedTitle) > 255){
+            $error[] = "Titre trop long !";
+        }
+        if (strlen($trimmedContent) > 500){
+            $error[] = "Contenu trop long !";
         }
         if (count($error) != 0){
             
@@ -33,26 +50,23 @@ class Backend {
             exit();
         }
         
+        $postsManager = new PostsManager();
+        $post = $postsManager->addPost($title, $content);
         
-        
-        $PostsManager = new PostsManager();
-        $Post = $PostsManager->addPost($title, $content);
-        
-        if($Post == false)
+        if($post == false)
         {
             throw new \Exception('Impossible d\'ajouter le billet !');
         }
         else {
-            header('Location: index.php?action=listPosts');
-            exit();
+            return $this->response->redirect('listPosts');
         }
     }
 
     public function getPost($id) 
     {
-        $PostsManager = new PostsManager();
+        $postsManager = new PostsManager();
     
-        $Post = $PostsManager->getPost($id);
+        $post = $postsManager->getPost($id);
         
         require('view/backend/editPostView.php');
     }
@@ -61,20 +75,37 @@ class Backend {
     {   
         $error = [];
         
+        $trimmedTitle = trim($title);
+        
+        $trimmedContent = trim($content);
+        
         if (strlen($title) < 3){
             $error[] = "Titre trop court !";
         }
+        if (strlen($content) < 3){
+            $error[] = "Contenu trop court !";
+        }
+        
+        if (strlen($title) < 255){
+            $error[] = "Titre trop long !";
+        }
+        if (strlen($content) < 255){
+            $error[] = "Contenu trop long !";
+        }
+        
         if (count($error) != 0){
+            
+            $_SESSION['error'] = $error;
             
             header('Location: index.php?action=newPost');
             exit();
         }
         
-        $PostsManager = new PostsManager();
+        $postsManager = new PostsManager();
     
-        $Post = $PostsManager->editPost($id, $title, $content);
+        $post = $postsManager->editPost($id, $title, $content);
         
-        if($Post == false)
+        if($post == false)
         {
             throw new \Exception('Impossible d\'ajouter le billet !');
         }
@@ -92,11 +123,11 @@ class Backend {
     
     public function deletePost($id)
     {
-        $PostsManager = new PostsManager();
+        $postsManager = new PostsManager();
     
-        $Post = $PostsManager->deletePost($id);
+        $post = $postsManager->deletePost($id);
         
-        if($Post == false)
+        if($post == false)
         {
             throw new \Exception('Impossible de supprimer le billet !');
         }
@@ -108,9 +139,9 @@ class Backend {
     
     public function removeReport($commentID)
     {
-        $CommentsManager = new CommentsManager();
+        $commentsManager = new CommentsManager();
         
-        $affectedComment = $CommentsManager->removeReport($commentID);
+        $affectedComment = $commentsManager->removeReport($commentID);
 
         header('Location: index.php?action=listPosts');
     }
@@ -122,9 +153,9 @@ class Backend {
     
     public function deleteComment($commentID)
     {
-        $CommentsManager = new CommentsManager();
+        $commentsManager = new CommentsManager();
     
-        $affectedComment = $CommentsManager->deleteComment($commentID);
+        $affectedComment = $commentsManager->deleteComment($commentID);
         
         if($affectedComment == false)
         {
@@ -139,14 +170,14 @@ class Backend {
     public function dashboard()
     {
         
-        $PostsManager = new PostsManager();
-        $Posts = $PostsManager->getPosts();
+        $postsManager = new PostsManager();
+        $posts = $postsManager->getPosts();
         
-        $CommentsManager = new CommentsManager();
-        $Comments = $CommentsManager->getComments();
+        $commentsManager = new CommentsManager();
+        $comments = $commentsManager->getComments();
         
-        $UsersManager = new UsersManager();
-        $Users = $UsersManager->getUsers();
+        $usersManager = new UsersManager();
+        $users = $usersManager->getUsers();
         
         require("View/backend/adminDashboardView.php");
     }

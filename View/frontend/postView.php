@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<?php $title = htmlspecialchars($Post['title']); ?>
+<?php $title = htmlspecialchars($post['title']); ?>
 
 <header class="major">
     <h3>Lecture du billet</h3>
@@ -7,18 +7,18 @@
 
 <div class="news">
     <h1>
-        <?= htmlspecialchars($Post['title']) ?>
-        <em>le <?= $Post['creation_date_fr'] ?></em>
+        <?= htmlspecialchars($post['title']) ?>
+        <em>le <?= $post['creation_date_fr'] ?></em>
     </h1>
             
     <p>
-        <?= nl2br(htmlspecialchars($Post['content'])) ?>
+        <?= nl2br($post['content']) ?>
     </p>
 </div>
 
 <h4>Liste des commentaires associés :</h4>
 
-<form action ="index.php?action=addComment&amp;id=<?= $Post['id'] ?>" method="post">
+<form action ="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
     <div>
         <label for="author">Auteur :</label><br />
         <input type="text" id="author" name="author" />
@@ -33,18 +33,18 @@
 </form>
 
 <?php
-while($Comment = $Comments->fetch())
+while($comment = $comments->fetch())
 {
 ?>
 
     <p>
-        <strong><?= htmlspecialchars($Comment['author']) ?></strong> le <?= $Comment['comment_date_fr'] ?>
-        <a href="index.php?action=getComment&amp;id=<?= $Comment['id'] ?>"> (modifier)</a>
-        <a href="index.php?action=confirmDeleteComment&amp;id=<?= $Comment['id'] ?>"> (supprimer)</a>
-        <a href="index.php?action=reportComment&amp;id=<?= $Comment['id'] ?>"> (signaler)
+        <strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?>
+        <a href="index.php?action=getComment&amp;id=<?= $comment['id'] ?>"> (modifier)</a>
+        <a href="index.php?action=confirmDeleteComment&amp;id=<?= $comment['id'] ?>"> (supprimer)</a>
+        <a href="index.php?action=reportComment&amp;id=<?= $comment['id'] ?>"> (signaler)
         </a>
     </p>
-    <p><?= nl2br(htmlspecialchars($Comment['comment'])) ?></p>
+    <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
 <?php
 }
 ?>

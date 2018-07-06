@@ -22,7 +22,7 @@
             </thead>
             <tbody>
         <?php
-        while ($data = $Posts->fetch())
+        while ($data = $posts->fetch())
         {
         ?>
 				    <tr>
@@ -46,7 +46,7 @@
                 
         <?php
         }
-        $Posts->closeCursor();
+        $posts->closeCursor();
         ?>
             </tbody>
         </table>
@@ -56,17 +56,17 @@
 <div class="news">
     <h4>Gestion des commentaires :</h4>
 <?php
-    while($Comment = $Comments->fetch())
+    while($comment = $comments->fetch())
     {
 ?>
         <h1>
-            <strong><?= htmlspecialchars($Comment['author']) ?></strong> le <?= $Comment['comment_date_fr'] ?> <br />
-            <?= nl2br(htmlspecialchars($Comment['comment'])) ?></h1>
+            <strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?> <br />
+            <?= nl2br(htmlspecialchars($comment['comment'])) ?></h1>
         <?php
-        if($Comment['report'] != 0){
+        if($comment['report'] != 0){
         ?>
-        <em><?= nl2br(htmlspecialchars($Comment['report'])) ?></em>
-        <a href="index.php?action=removeReport&amp;id=<?= $Comment['id']?>">Retirer le signalement</a>
+        <em><?= nl2br(htmlspecialchars($comment['report'])) ?></em>
+        <a href="index.php?action=removeReport&amp;id=<?= $comment['id']?>">Retirer le signalement</a>
         <?php
         }
         ?>
@@ -78,13 +78,13 @@
 <div class="news">
     <h4>Gestion des utilisateurs :</h4>
         <?php
-        while($User = $Users->fetch())
+        while($user = $users->fetch())
         {
         ?>
         <h1>
-            <?= htmlspecialchars($User['pseudo']); ?> 
-            <?= htmlspecialchars($User['mail']); ?>
-            <a href="index.php?action=deleteUser&amp;id=<?= $User['id']?>">Supprimer l'utilisateur</a>
+            <?= htmlspecialchars($user['pseudo']); ?> 
+            <?= htmlspecialchars($user['mail']); ?>
+            <a href="index.php?action=deleteUser&amp;id=<?= $user['id']?>">Supprimer l'utilisateur</a>
         <h1>
         <?php
         }

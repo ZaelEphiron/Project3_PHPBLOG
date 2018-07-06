@@ -6,8 +6,14 @@
 </header>
 
 <?php if (array_key_exists('error', $_SESSION)){
-            var_dump($_SESSION['error']);
-        } ?>
+            for ($i=0; $i < count($_SESSION['error']); $i++){
+                ?>
+                <div class="error"><?= $_SESSION['error'][$i]?></div>
+            <?php
+            }
+        unset($_SESSION['error']);
+        } 
+?>
     <form action ="index.php?action=addPost" method="post">
         <div>
             <label for="title">Titre</label><br />

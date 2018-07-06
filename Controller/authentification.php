@@ -11,14 +11,14 @@ class Authentification {
     
     public function verifId()
     {
-        $UsersManager = new UsersManager();
+        $usersManager = new UsersManager();
     
-        if(isset ($_POST['pseudo']))
+        if(isset($_POST['pseudo']))
         {
         
-        $User = $UsersManager->verifId($_POST['pseudo']);
+        $user = $usersManager->verifId($_POST['pseudo']);
     
-        if($User->getPassword() != password_hash($_POST['password'], PASSWORD_BCRYPT)){
+        if($user->getPassword() != password_hash($_POST['password'], PASSWORD_BCRYPT)){
             throw new \Exception('Les identifiants ne correspondent pas');
         }
         else {
@@ -29,11 +29,11 @@ class Authentification {
     
     public function addUser($pseudo, $password, $mail)
     {
-        $UsersManager = new UsersManager();
+        $usersManager = new UsersManager();
     
-        $User = $UsersManager->addUser($pseudo, password_hash($password, PASSWORD_BCRYPT), $mail);
+        $user = $usersManager->addUser($pseudo, password_hash($password, PASSWORD_BCRYPT), $mail);
         
-        if($User == false){
+        if($user == false){
             throw new \Exception('L\'inscription n\'a pas pu aboutir !');
         }
         else {
@@ -43,26 +43,10 @@ class Authentification {
         
     public function deleteUser($id, $pseudo, $password, $mail, $role)
     {
-        $UsersManager = new UsersManager();
+        $usersManager = new UsersManager();
     
-        $UsersManager->deleteUser($id, $pseudo, $password, $mail, $role);
+        $usersManager->deleteUser($id, $pseudo, $password, $mail, $role);
     }
-    
-    /*
-    public function getUser()
-    {
-        $UsersManager = new UsersManager();
-    
-        $User = $UsersManager->getUser($_GET['id']);
-    }
-        
-    public function getUsers()
-    {
-        $UsersManager = new UsersManager();
-        
-        $Users = $UsersManager->getUsers();
-    }
-    */
     
     public function inscription()
     {
@@ -84,17 +68,17 @@ class Authentification {
     
     public function checkLog($pseudo, $password)
     {
-        $UsersManager = new UsersManager();
+        $usersManager = new UsersManager();
         
-        $User = $UsersManager->verifId($pseudo);
+        $user = $usersManager->verifId($pseudo);
         
-        if($User === false){
+        if($user === false){
             throw new \Exception('Les identifiants sont invalides');
         }else{
-            if(password_verify($password, $User['password'])){
+            if(password_verify($password, $user['password'])){
                 $_SESSION['pseudo'] = $pseudo;
-                $_SESSION['role'] = $User['role'];
-                    if($User['role'] == 'admin'){
+                $_SESSION['role'] = $user['role'];
+                    if($user['role'] == 'admin'){
                         header('Location: index.php?action=dashboard');
                     }else{
                     echo 'Connecté';

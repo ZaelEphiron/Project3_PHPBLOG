@@ -11,53 +11,100 @@ class Frontend {
 
     public function listPosts()
     {
-        $PostsManager = new PostsManager();
-        $Posts = $PostsManager->getPosts();
+        $postsManager = new PostsManager();
+        $posts = $postsManager->getPosts();
         require('view/frontend/listPostsView.php');
     }
 
     public function post()
     {
-        $PostsManager = new PostsManager();
-        $CommentsManager = new CommentsManager();
+        $postsManager = new PostsManager();
+        $commentsManager = new CommentsManager();
 
-        $Post = $PostsManager->getPost($_GET['id']);
-        $Comments = $CommentsManager->getComments($_GET['id']);
+        $post = $postsManager->getPost($_GET['id']);
+        $comments = $commentsManager->getComments($_GET['id']);
         
         require('view/frontend/postView.php');
     }
 
-    public function addComment($postID, $author, $Comment)
+    public function addComment($postId, $author, $comment)
     {   
-        $CommentsManager = new CommentsManager();
+        $error = [];
+        
+        $trimmedAuthor = trim($author);
+        
+        $trimmedComment = trim($comment);
+        
+        if (strlen($author) < 3){
+            $error[] = "Nom de l'auteur trop court !";
+        }
+        if (strlen($comment) < 3){
+            $error[] = "Commentaire trop court !";
+        }
+        
+        if (strlen($author) > 255){
+            $error[] = "Nom de l'auteur trop long !";
+        }
+        if (strlen($comment) > 500){
+            $error[] = "Commentaire trop long !";
+        }
+        
+        if (count($error) != 0){
+            
+            $_SESSION['error'] = $error;
+            
+            header('Location: index.php?action=post&id='.$postId);
+            exit();
+        }
+        
+        $commentsManager = new CommentsManager();
     
-        $Comment = $CommentsManager->addComment($postID, $author, $Comment);
+        $comment = $commentsManager->addComment($postId, $author, $comment);
     
-        if($Comment == false){
+        if($comment == false){
             throw new Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
-            header('Location: index.php?action=post&id=' . $postID);
+            header('Location: index.php?action=post&id='.$postId);
         }
     }
 
-    public function getComment($commentID)
+    public function getComment($commentId)
     {
-        $CommentsManager = new CommentsManager();
+        $commentsManager = new CommentsManager();
     
-        $Comment = $CommentsManager->getComment($_GET['id']);
+        $comment = $commentsManager->getComment($_GET['id']);
     
         require('view/frontend/editCommentView.php');
     }
 
-    public function editComment($commentID, $Comment)
+    public function editComment($commentId, $comment)
     {   
-        $CommentsManager = new CommentsManager();
+        $error = [];
+        
+        $trimmedComment = trim($comment);
+        
+        if (strlen($comment) < 3){
+            $error[] = "Commentaire trop court !";
+        }
+        if (strlen($comment) < 255){
+            $error[] = "Commentaire trop long !";
+        }
+        
+        if (count($error) != 0){
+            
+            $_SESSION['error'] = $error;
+            
+            header('Location: index.php?action=getComment&id='.$commentId);
+            exit();
+        }
+        
+        $commentsManager = new CommentsManager();
     
-        $affectedComment = $CommentsManager->editComment($commentID, $Comment);
+        $affectedComment = $commentsManager->editComment($commentId, $comment);
     
-        $Comment = $CommentsManager->getComment($commentID);
-        $postID = $Comment['post_id'];
+        $comment = $commentsManager->getComment($commentId);
+        $postId = $comment['post_id'];
     
         if($affectedComment == false){
             throw new Exception('Erreur lors de la modification !');
@@ -68,11 +115,11 @@ class Frontend {
         }
     }
 
-    public function reportComment($commentID)
+    public function reportComment($commentId)
     {
-        $CommentsManager = new CommentsManager();
+        $commentsManager = new CommentsManager();
         
-        $affectedComment = $CommentsManager->reportComment($commentID);
+        $affectedComment = $commentsManager->reportComment($commentId);
 
         header('Location: index.php?action=listPosts');
     }

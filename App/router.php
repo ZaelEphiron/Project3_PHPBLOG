@@ -148,7 +148,7 @@ class Router
             $backend->dashboard();
         }elseif ($_GET['action'] === 'logout'){
             $authentification->logout();
-        }
+        }//page erreur 404
     }
     else {
         $frontend->listPosts();

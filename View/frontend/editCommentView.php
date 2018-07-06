@@ -5,10 +5,20 @@
     <h1>Formulaire de modification de commentaire :</h1>
 </header>
     
-    <form action="index.php?action=editComment&amp;id=<?= $commentID ?>" method="post">
+<?php if (array_key_exists('error', $_SESSION)){
+            for ($i=0; $i < count($_SESSION['error']); $i++){
+                ?>
+                <div class="error"><?= $_SESSION['error'][$i]?></div>
+            <?php
+            }
+        unset($_SESSION['error']);
+        } 
+?>
+
+    <form action="index.php?action=editComment&amp;id=<?= $commentId ?>" method="post">
         <div>
             <label for="comment">Commentaire :</label><br />  
-            <textarea id="comment" name="comment" value="" /><?= $Comment['comment'] ?></textarea>
+            <textarea id="comment" name="comment" value="" /><?= $comment['comment'] ?></textarea>
             <br />
         </div>
         <div>

@@ -9,9 +9,9 @@ class UsersManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, pseudo, password, role FROM users WHERE pseudo = ?');
         $req->execute(array($_pseudo));
-        $User = $req->fetch();
+        $user = $req->fetch();
         
-        return $User;
+        return $user;
     }    
     
     public function addUser($_pseudo, $_password, $_mail)
@@ -19,39 +19,39 @@ class UsersManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO users (pseudo, password, mail) VALUES(?,?,?)');
         $req->execute(array($_pseudo, $_password, $_mail)); 
-        $UserId = $db->lastInsertId();
+        $userId = $db->lastInsertId();
         
         $reqUser = $db->query('SELECT id, pseudo, password, mail FROM users WHERE id = '.$UserId);
-        $User = $reqUser->fetch();
+        $user = $reqUser->fetch();
         
-        return $User;
+        return $user;
     }
         
     public function deleteUser($_id, $_pseudo, $_password, $_mail, $_role)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE id, pseudo, password, mail, role FROM users');
-        $User = $req->execute(array($_id, $_pseudo, $_password, $_mail, $_role)); 
+        $user = $req->execute(array($_id, $_pseudo, $_password, $_mail, $_role)); 
     
-        return $User;
+        return $user;
     }
     
     public function getUser($_id, $_pseudo, $_password, $_mail, $_role)
     {
         $db = $this->dbConnect();
-        $User = $db->prepare('SELECT id, pseudo, password, mail, role FROM users WHERE id = ? ORDER BY id DESC');
-        $User->execute(array($_id, $_pseudo, $_password, $_mail, $_role));
+        $user = $db->prepare('SELECT id, pseudo, password, mail, role FROM users WHERE id = ? ORDER BY id DESC');
+        $user->execute(array($_id, $_pseudo, $_password, $_mail, $_role));
         
-        return $User;
+        return $user;
     }
         
     public function getUsers()
     {
         $db = $this->dbConnect();
         
-        $Users = $db->prepare('SELECT id, pseudo, password, mail, role FROM users ORDER BY id DESC');
-        $Users->execute();        
+        $users = $db->prepare('SELECT id, pseudo, password, mail, role FROM users ORDER BY id DESC');
+        $users->execute();        
         
-        return $Users;
+        return $users;
     }
 } 
