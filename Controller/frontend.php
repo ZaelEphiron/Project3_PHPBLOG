@@ -87,7 +87,7 @@ class Frontend {
         if (strlen($comment) < 3){
             $error[] = "Commentaire trop court !";
         }
-        if (strlen($comment) < 255){
+        if (strlen($comment) > 500){
             $error[] = "Commentaire trop long !";
         }
         

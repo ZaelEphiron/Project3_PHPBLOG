@@ -86,10 +86,10 @@ class Backend {
             $error[] = "Contenu trop court !";
         }
         
-        if (strlen($title) < 255){
+        if (strlen($title) > 255){
             $error[] = "Titre trop long !";
         }
-        if (strlen($content) < 255){
+        if (strlen($content) > 500){
             $error[] = "Contenu trop long !";
         }
         
