@@ -30,7 +30,7 @@
                             <?= htmlspecialchars($data['title']) ?>
                         </td>
                         <td>
-                            <?= nl2br(htmlspecialchars($data['content'])) ?>
+                            <?= nl2br($data['content']) ?>
                         </td>
                         <td>
                             <em>le <?= $data['creation_date_fr'] ?></em>

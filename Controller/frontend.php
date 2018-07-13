@@ -6,8 +6,16 @@ namespace BlogPHP\Controller;
 use BlogPHP\Model\PostsManager;
 use BlogPHP\Model\CommentsManager;
 use BlogPHP\Model\UsersManager;
+use BlogPHP\App\Response;
 
 class Frontend {
+    
+    private $response;
+    
+    public function __construct()
+    {
+        $this->response = new Response();
+    }
     
     public function listPosts()
     {
