@@ -61,8 +61,7 @@ class Frontend {
             
             $_SESSION['error'] = $error;
             
-            header('Location: index.php?action=post&id='.$postId);
-            exit();
+            return $this->response->redirect("post&id='.$postId'");
         }
         
         $commentsManager = new CommentsManager();
@@ -73,7 +72,7 @@ class Frontend {
             throw new Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
-            header('Location: index.php?action=post&id='.$postId);
+            return $this->response->redirect("post&id='.$postId'");
         }
     }
 
@@ -103,12 +102,11 @@ class Frontend {
             
             $_SESSION['error'] = $error;
             
-            header('Location: index.php?action=getComment&id='.$commentId);
-            exit();
+            return $this->response->redirect("getComment&id='.$commentId'");
         }
         
         $commentsManager = new CommentsManager();
-    
+
         $affectedComment = $commentsManager->editComment($commentId, $comment);
     
         $comment = $commentsManager->getComment($commentId);
@@ -118,8 +116,7 @@ class Frontend {
             throw new Exception('Erreur lors de la modification !');
         }
         else {
-            header('Location: index.php?action=listPosts');
-            exit();
+             return $this->response->redirect('listPosts');
         }
     }
 
@@ -129,11 +126,11 @@ class Frontend {
         
         $affectedComment = $commentsManager->reportComment($commentId);
 
-        header('Location: index.php?action=listPosts');
+         return $this->response->redirect('listPosts');
     }
     
     public function error404()
     {
-        header('Location: index.php?action=error404');
+        require('view/frontend/errorView.php');
     }
 }

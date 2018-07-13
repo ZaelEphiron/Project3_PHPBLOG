@@ -46,8 +46,7 @@ class Backend {
             
             $_SESSION['error'] = $error; 
                 
-            header('Location: index.php?action=newPost');
-            exit();
+            return $this->response->redirect('newPost');
         }
         
         $postsManager = new PostsManager();
@@ -97,8 +96,7 @@ class Backend {
             
             $_SESSION['error'] = $error;
             
-            header('Location: index.php?action=newPost');
-            exit();
+             return $this->response->redirect('getPost');
         }
         
         $postsManager = new PostsManager();
@@ -111,8 +109,7 @@ class Backend {
         }
     
         else{
-            header('Location: index.php?action=listPosts');
-            exit();
+             return $this->response->redirect('listPosts');
         }
     }
 
@@ -132,8 +129,7 @@ class Backend {
             throw new \Exception('Impossible de supprimer le billet !');
         }
         else{
-            header('Location: index.php?action=listPosts');
-            exit();
+             return $this->response->redirect('listPosts');
             }
     }
     
@@ -143,7 +139,7 @@ class Backend {
         
         $affectedComment = $commentsManager->removeReport($commentID);
 
-        header('Location: index.php?action=listPosts');
+         return $this->response->redirect('listPosts');
     }
     
     public function confirmDeleteComment()
@@ -162,8 +158,7 @@ class Backend {
             throw new \Exception('Impossible de supprimer le commentaire !');
         }
         else{
-            header('Location: index.php?action=listPosts');
-            exit();
+             return $this->response->redirect('listPosts');
             }
     }
     
