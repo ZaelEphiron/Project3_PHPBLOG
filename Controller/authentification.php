@@ -6,16 +6,9 @@ namespace BlogPHP\Controller;
 use BlogPHP\Model\PostsManager;
 use BlogPHP\Model\CommentsManager;
 use BlogPHP\Model\UsersManager;
-use BlogPHP\App\Response;
+use BlogPHP\Controller\Controller;
 
-class Authentification {
-    
-    private $response;
-    
-    public function __construct()
-    {
-        $this->response = new Response();
-    }
+class Authentification extends Controller {
     
     public function verifId()
     {
@@ -30,7 +23,7 @@ class Authentification {
             throw new \Exception('Les identifiants ne correspondent pas');
         }
         else {
-            header('Location: index.php?action=listPosts');
+            return $this->response->redirect('listPosts');
         }
     }
 }
@@ -45,7 +38,7 @@ class Authentification {
             throw new \Exception('L\'inscription n\'a pas pu aboutir !');
         }
         else {
-            header('Location: index.php?action=listPosts');
+            return $this->response->redirect('listPosts');
         }
     }
         
@@ -71,11 +64,11 @@ class Authentification {
         session_unset();
         session_destroy();
         
-        header('Location: index.php?action=listPosts');
+        return $this->response->redirect('listPosts');
     }
     
     public function checkLog($pseudo, $password)
-    {
+    {   
         $usersManager = new UsersManager();
         
         $user = $usersManager->verifId($pseudo);
@@ -87,7 +80,7 @@ class Authentification {
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['role'] = $user['role'];
                     if($user['role'] == 'admin'){
-                        header('Location: index.php?action=dashboard');
+                        return $this->response->redirect('dashboard');
                     }else{
                     echo 'Connecté';
                     }

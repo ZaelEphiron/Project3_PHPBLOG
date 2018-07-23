@@ -6,16 +6,9 @@ namespace BlogPHP\Controller;
 use BlogPHP\Model\PostsManager;
 use BlogPHP\Model\CommentsManager;
 use BlogPHP\Model\UsersManager;
-use BlogPHP\App\Response;
+use BlogPHP\Controller\Controller;
 
-class Frontend {
-    
-    private $response;
-    
-    public function __construct()
-    {
-        $this->response = new Response();
-    }
+class Frontend extends Controller {
     
     public function listPosts()
     {
@@ -43,17 +36,17 @@ class Frontend {
         
         $trimmedComment = trim($comment);
         
-        if (strlen($author) < 3){
+        if (strlen($trimmedAuthor) < 3){
             $error[] = "Nom de l'auteur trop court !";
         }
-        if (strlen($comment) < 3){
+        if (strlen($trimmedComment) < 3){
             $error[] = "Commentaire trop court !";
         }
         
-        if (strlen($author) > 255){
+        if (strlen($trimmedAuthor) > 255){
             $error[] = "Nom de l'auteur trop long !";
         }
-        if (strlen($comment) > 500){
+        if (strlen($trimmedComment) > 500){
             $error[] = "Commentaire trop long !";
         }
         
@@ -61,7 +54,7 @@ class Frontend {
             
             $_SESSION['error'] = $error;
             
-            return $this->response->redirect("post&id='.$postId'");
+            return $this->response->redirect('post&id='.$postId);
         }
         
         $commentsManager = new CommentsManager();
@@ -72,7 +65,8 @@ class Frontend {
             throw new Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
-            return $this->response->redirect("post&id='.$postId'");
+            
+            return $this->response->redirect('post&id='.$postId);
         }
     }
 
@@ -91,10 +85,10 @@ class Frontend {
         
         $trimmedComment = trim($comment);
         
-        if (strlen($comment) < 3){
+        if (strlen($trimmedComment) < 3){
             $error[] = "Commentaire trop court !";
         }
-        if (strlen($comment) > 500){
+        if (strlen($trimmedComment) > 500){
             $error[] = "Commentaire trop long !";
         }
         

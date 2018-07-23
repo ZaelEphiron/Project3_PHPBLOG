@@ -1,6 +1,3 @@
-<?php ob_start(); ?>
-<?php $title = "Ajouter un commentaire"; ?>
-
 <header class="major">
     <h1>Formulaire d'ajout de commentaire :</h1>
 </header>
@@ -28,6 +25,3 @@
             <input type="submit" />
         </div>
     </form>
-
-<?php $content = ob_get_clean(); ?>
-<?php require('view/template.php'); ?>

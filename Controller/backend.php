@@ -6,16 +6,9 @@ namespace BlogPHP\Controller;
 use BlogPHP\Model\PostsManager;
 use BlogPHP\Model\CommentsManager;
 use BlogPHP\Model\UsersManager;
-use BlogPHP\App\Response;
+use BlogPHP\Controller\Controller;
 
-class Backend {
-    
-    private $response;
-    
-    public function __construct()
-    {
-        $this->response = new Response();
-    }
+class Backend extends Controller {
     
     public function newPost()
     {
@@ -78,17 +71,17 @@ class Backend {
         
         $trimmedContent = trim($content);
         
-        if (strlen($title) < 3){
+        if (strlen($trimmedTitle) < 3){
             $error[] = "Titre trop court !";
         }
-        if (strlen($content) < 3){
+        if (strlen($trimmedContent) < 3){
             $error[] = "Contenu trop court !";
         }
         
-        if (strlen($title) > 255){
+        if (strlen($trimmedTitle) > 255){
             $error[] = "Titre trop long !";
         }
-        if (strlen($content) > 500){
+        if (strlen($trimmedContent) > 500){
             $error[] = "Contenu trop long !";
         }
         
