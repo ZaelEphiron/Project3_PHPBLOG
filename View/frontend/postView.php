@@ -28,7 +28,14 @@ while($comment = $comments->fetch())
     <p>
         <strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?>
         <a href="index.php?action=getComment&amp;id=<?= $comment['id'] ?>"> (modifier)</a>
+    <?php   if (array_key_exists('role', $_SESSION)){
+                            if ($_SESSION['role'] === 'admin'){
+                        ?>
         <a href="index.php?action=confirmDeleteComment&amp;id=<?= $comment['id'] ?>"> (supprimer)</a>
+    <?php
+                            }
+            }
+    ?>
         <a href="index.php?action=reportComment&amp;id=<?= $comment['id'] ?>"> (signaler)
         </a>
     </p>
