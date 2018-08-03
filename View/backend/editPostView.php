@@ -33,7 +33,8 @@
 <script src="Public/assets/js/tinymce/tinymce.min.js"></script>
 <script>
   tinymce.init({
-    selector: '.tinymce'
+    selector: '.tinymce',
+    language: 'fr_FR'
   });
 </script>
 
