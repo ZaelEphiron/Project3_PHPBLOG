@@ -14,9 +14,8 @@
             <?= htmlspecialchars($data['title']) ?>
             <em>le <?= $data['creation_date_fr'] ?></em>
         </h4>
-        <p><?= nl2br($data['content']) ?></p>
-        
-        <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Commentaires</a></em>
+        <p><?= nl2br($data['content']) ?></br>
+        <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Voir plus ></a></em></p>
 <?php
 }
 $posts->closeCursor();

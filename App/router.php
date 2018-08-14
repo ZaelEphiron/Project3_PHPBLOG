@@ -145,7 +145,13 @@ class Router
                         throw new \Exception('Tous les champs ne sont pas remplis !');
                     }   
         }elseif ($_GET['action'] === 'dashboard'){
-            $backend->dashboard();
+            if (array_key_exists('role', $_SESSION)){
+                if ($_SESSION['role'] === 'admin'){
+                    $backend->dashboard();
+                }
+            }else{
+                $frontend->listPosts();
+            }
         }elseif ($_GET['action'] === 'logout'){
             $authentification->logout();
         }
